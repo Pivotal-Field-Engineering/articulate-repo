@@ -41,11 +41,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: ui.user1.caas.pez.pivotal.io
-      paths: ["/*"]
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+      paths: ["/ui"]
+  tls: 
+    - secretName: tls
+      hosts:
+        - ui.user1.caas.pez.pivotal.io
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

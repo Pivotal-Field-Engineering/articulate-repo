@@ -13,3 +13,11 @@ $ ./mvnw spring-boot:run
 6. helm lint
 7. helm install ins1 pks-demo --debug --dry-run > delete.yaml
 8. helm install ins1 pks-demo
+9. Create DNS for Ingress
+10. openssl req -x509 \
+  -nodes -newkey rsa:4096 \
+  -keyout KEY-PATH.pem \
+  -out CERT-PATH.pem \
+  -days 365 \
+  -subj "/CN=*.user1.caas.pez.pivotal.io"
+11. kubectl create secret tls INGRESS-CERT --key KEY-PATH.pem --cert CERT-PATH.pem
