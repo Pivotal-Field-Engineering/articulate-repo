@@ -34,10 +34,11 @@ service:
   type: ClusterIP
   port: 8080
 
+
 ingress:
   enabled: true
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  annotations:
+    ingress.kubernetes.io/rewrite-target: "/"
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: ui.user1.caas.pez.pivotal.io
