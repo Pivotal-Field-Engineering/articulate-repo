@@ -3,7 +3,7 @@ resources:
   - name: resource-git-pks-demo
     type: git
     source:
-      uri: https://github.com/hemanth-avs/Cookbook.git
+      uri: https://github.com/hemanth-avs/pks-demo.git
       branch: master
 
 jobs:
@@ -22,6 +22,6 @@ jobs:
             - name: resource-git-pks-demo
               path: code
           run:
+            #path: code/ci/concourse/config/list-files.sh
             path: ls
             args: [-lRrta]
-        # file: ../tasks/list-files.yml
