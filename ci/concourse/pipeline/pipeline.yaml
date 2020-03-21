@@ -21,7 +21,7 @@ jobs:
           inputs:
             - name: resource-git-pks-demo
               path: code
-          run:
+          run:        
             path: ./code/ci/concourse/config/list-files.sh
             #path: ls
             #args: [-lRrta]
