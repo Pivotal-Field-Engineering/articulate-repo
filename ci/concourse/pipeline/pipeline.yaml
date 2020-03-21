@@ -12,18 +12,6 @@ jobs:
     plan:
       - get: resource-git-pks-demo
         trigger: true
-      - task: unit-test
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source: {repository: busybox}
-          inputs:
-            - name: resource-git-pks-demo
-              path: code
-          run:
-            path: ./mvnw
-            args: [ test ]
       - task: list-files
         config:
           platform: linux
@@ -38,3 +26,15 @@ jobs:
             #path: ls
             #args: [-lRrta]
             # ./mvnw test
+      - task: unit-test
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
+          inputs:
+            - name: resource-git-pks-demo
+              path: code
+          run:
+            path: ./mvnw
+            args: [ test ]
