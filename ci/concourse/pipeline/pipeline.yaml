@@ -12,6 +12,8 @@ jobs:
     plan:
       - get: resource-git-pks-demo
         trigger: true
+      - task: list-files-test
+        file: ./code/ci/concourse/tasks/list-files.yml
       - task: list-files
         config:
           platform: linux
