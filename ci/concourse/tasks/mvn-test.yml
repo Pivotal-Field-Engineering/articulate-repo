@@ -6,7 +6,7 @@ image_resource:
         repository: maven
         tag: 3.6.3-jdk-11-slim 
 inputs:
-    - name: resource-git-pks-demo
+    - name: pks-demo-git-repo
       path: code
 run:
     dir: code
