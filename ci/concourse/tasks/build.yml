@@ -3,14 +3,23 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source:
-    repository: docker
+  source: 
+    repository: harbor.caas.pez.pivotal.io:443/hemanth
+    insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
+    tag: "latest"
+    username: (( username ))
+    password: (( password ))
+
 inputs:
-  - name: pks-demo-git-repo
-    path: code
-#run:        
-#  path: ./code/ci/concourse/config/list-files.sh
+- name: pks-demo-git-repo
+
+outputs:
+- name: pksdemo
+
+params:
+  DOCKERFILE: pks-demo-git-repo/Dockerfile
+  CONTEXT: .
+
 run:
-  dir: code
   path: sleep
-  args: ["20"]
+  args: ["30"]
