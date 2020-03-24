@@ -12,5 +12,5 @@ inputs:
 #  path: ./code/ci/concourse/config/list-files.sh
 run:
   dir: code
-  path: docker
-  args: ["ps"]
+  path: sleep
+  args: ["20"]
