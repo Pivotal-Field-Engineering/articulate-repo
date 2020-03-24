@@ -1,6 +1,6 @@
 ---
 resources:
-  - name: resource-git-pks-demo
+  - name: pks-demo-git-repo
     type: git
     source:
       uri: https://github.com/hemanth-avs/pks-demo.git
@@ -10,10 +10,10 @@ jobs:
   - name: job-list-files
     public: true
     plan:
-      - get: resource-git-pks-demo
+      - get: pks-demo-git-repo
         trigger: true
       - task: list-files-test
-        file: resource-git-pks-demo/ci/concourse/tasks/list-files.yml
+        file: pks-demo-git-repo/ci/concourse/tasks/list-files.yml
       - task: list-files
         config:
           platform: linux
