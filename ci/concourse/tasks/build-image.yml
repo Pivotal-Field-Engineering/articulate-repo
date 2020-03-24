@@ -6,12 +6,15 @@ image_resource:
   source: 
     repository: harbor.caas.pez.pivotal.io:443/hemanth
     insecure_registries: [ "harbor.caas.pez.pivotal.io:443", "harbor.caas.pez.pivotal.io:4443" ]
+    tag: "latest"
+    #username: (( username ))
+    #password: (( password ))
 
 inputs:
 - name: pks-demo-git-repo
 
 outputs:
-- name: image
+- name: pksdemo
 
 params:
   DOCKERFILE: pks-demo-git-repo/Dockerfile
