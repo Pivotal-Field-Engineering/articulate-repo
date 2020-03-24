@@ -1,0 +1,20 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: 
+    repository: harbor.caas.pez.pivotal.io/hemanth
+
+inputs:
+- name: pks-demo-git-repo
+
+outputs:
+- name: image
+
+params:
+  DOCKERFILE: pks-demo-git-repo/Dockerfile
+  CONTEXT: .
+
+run:
+  path: build
