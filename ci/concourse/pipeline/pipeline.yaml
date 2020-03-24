@@ -16,3 +16,5 @@ jobs:
         file: pks-demo-git-repo/ci/concourse/tasks/list-files.yml
       - task: unit-test
         file: pks-demo-git-repo/ci/concourse/tasks/mvn-test.yml
+      - task: package
+        file: pks-demo-git-repo/ci/concourse/tasks/mvn-package.yml
