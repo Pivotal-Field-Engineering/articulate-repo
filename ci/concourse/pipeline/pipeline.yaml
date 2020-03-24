@@ -7,14 +7,23 @@ resources:
       branch: master
 
 jobs:
-  - name: job-list-files
+  - name: unit-tests
     public: true
     plan:
       - get: pks-demo-git-repo
         trigger: true
-      - task: list-files
-        file: pks-demo-git-repo/ci/concourse/tasks/list-files.yml
+      #- task: list-files
+      #  file: pks-demo-git-repo/ci/concourse/tasks/list-files.yml
       - task: unit-test
         file: pks-demo-git-repo/ci/concourse/tasks/mvn-test.yml
       - task: package
         file: pks-demo-git-repo/ci/concourse/tasks/mvn-package.yml
+  - name: build-artifact
+    public: true
+    serial: true
+    plan:
+    - get: pks-demo-git-repo
+      passed: [unit-tests]
+      trigger: true
+    - task: build
+      file: pks-demo-git-repo/ci/concourse/tasks/build.yml
