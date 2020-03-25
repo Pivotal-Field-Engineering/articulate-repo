@@ -11,7 +11,7 @@ resources:
   - name: pks-demo-helm-git-repo
     type: git
     source:
-      uri: https://github.com/hemanth-avs/pks-demo.git
+      uri: https://github.com/Pivotal-Field-Engineering/articulate-helmchart.git
       branch: master
       disable_ci_skip: true
   
@@ -27,9 +27,9 @@ resources:
     type: semver
     source:
       driver: git
-      uri: git@github.com:hemanth-avs/pks-demo.git
+      uri: git@github.com:Pivotal-Field-Engineering/articulate-helmchart.git
       branch: master
-      file: version
+      file: articulate/version
       commit_message: "ci skip"
       private_key: ((GIT_PRIVATE_KEY))
 
