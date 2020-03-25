@@ -27,5 +27,5 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scr
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-cd ./helm-chart
+cd ./code/helm-chart
 helm upgrade ins1 pks-demo
