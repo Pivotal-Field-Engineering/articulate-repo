@@ -16,12 +16,12 @@ resources:
     type: semver
     source:
       driver: git
-      uri: git@github.com:hemanth-avs/semver.git
+      uri: github.com/hemanth-avs/pks-demo.git
       branch: master
       file: version
       #username: ((git.username))
       #password: ((git.password))
-      commit_message: "Updates version"
+      commit_message: "ci skip"
       private_key: ((GIT_PRIVATE_KEY))
 jobs:
   - name: unit-tests
@@ -61,3 +61,4 @@ jobs:
           PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
           PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
           PKS_SKIP_TLS_VERIFY: true
+# sed -i 's/STRING_TO_REPLACE/STRING_TO_REPLACE_IT/g' filename
