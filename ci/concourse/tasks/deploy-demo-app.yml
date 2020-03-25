@@ -7,6 +7,9 @@ image_resource:
 
 inputs:
 - name: pcf-pipelines-utils
+- name: pks-demo-git-repo
+  path: code
+
 run:
   path: ./code/ci/concourse/config/deploy-pks-app.sh
 

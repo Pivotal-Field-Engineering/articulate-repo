@@ -42,7 +42,14 @@ jobs:
     public: true
     plan:
       - get: pcf-pipelines-utils
+      - get: pks-demo-git-repo
       - get: pks-demo-image
         trigger: true
       - task: deploy-pks-app
         file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
+        params:
+          PKS_API: ((PKS_API))
+          PKS_CLI_USERNAME: ((PKS_CLI_USERNAME))
+          PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
+          PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
+          PKS_SKIP_TLS_VERIFY: true
