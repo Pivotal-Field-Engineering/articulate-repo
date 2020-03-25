@@ -5,6 +5,12 @@ resources:
     source:
       uri: https://github.com/hemanth-avs/pks-demo.git
       branch: master
+  - name: pks-demo-helm-git-repo
+    type: git
+    source:
+      uri: https://github.com/hemanth-avs/pks-demo.git
+      branch: master
+      disable_ci_skip: true
   - name: pks-demo-image
     type: docker-image
     source:
@@ -19,8 +25,6 @@ resources:
       uri: git@github.com:hemanth-avs/pks-demo.git
       branch: master
       file: version
-      #username: ((git.username))
-      #password: ((git.password))
       commit_message: "ci skip"
       private_key: ((GIT_PRIVATE_KEY))
 jobs:
@@ -50,11 +54,10 @@ jobs:
   - name: deploy-pks
     public: true
     plan:
-      - get: pks-demo-git-repo
-      - get: pks-demo-image
+      - get: pks-demo-helm-git-repo
         trigger: true
       - task: deploy-pks-app
-        file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
+        file: pks-demo-helm-git-repo/ci/concourse/tasks/deploy-demo-app.yml
         params:
           PKS_API: ((PKS_API))
           PKS_CLI_USERNAME: ((PKS_CLI_USERNAME))

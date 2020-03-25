@@ -6,7 +6,7 @@ image_resource:
         repository: pivotalservices/pks-kubectl
 
 inputs:
-- name: pks-demo-git-repo
+- name: pks-demo-helm-git-repo
   path: code
 
 run:
