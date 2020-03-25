@@ -1,7 +1,7 @@
 ---
 resources:
 
-  - name: pks-demo-git-repo
+  - name: articulate-repo
     type: git
     source:
       uri: https://github.com/hemanth-avs/pks-demo.git
@@ -37,32 +37,32 @@ jobs:
   - name: unit-test
     public: true
     plan:
-      - get: pks-demo-git-repo
+      - get: articulate-repo
         trigger: true
       - task: unit-test
-        file: pks-demo-git-repo/ci/concourse/tasks/mvn-test.yml
+        file: articulate-repo/ci/concourse/tasks/mvn-test.yml
   
   - name: publish-image
     public: true
     serial: true
     plan:
-    - get: pks-demo-git-repo
+    - get: articulate-repo
       passed: [unit-test]
       trigger: true
     - get: version
     - put: pks-demo-image
-      params: { build: pks-demo-git-repo, tag_file: version/version }
+      params: { build: articulate-repo, tag_file: version/version }
     - put: version
       params: {bump: patch}
 
   - name: deploy-pks
     public: true
     plan:
-      - get: pks-demo-git-repo
+      - get: articulate-repo
       - get: pks-demo-helm-git-repo
         trigger: true
       - task: deploy-pks-app
-        file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
+        file: articulate-repo/ci/concourse/tasks/deploy-demo-app.yml
         params:
           PKS_API: ((PKS_API))
           PKS_CLI_USERNAME: ((PKS_CLI_USERNAME))

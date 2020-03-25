@@ -11,13 +11,13 @@ image_resource:
     password: (( password ))
 
 inputs:
-- name: pks-demo-git-repo
+- name: articulate-repo
 
 outputs:
 - name: pksdemo
 
 params:
-  DOCKERFILE: pks-demo-git-repo/Dockerfile
+  DOCKERFILE: articulate-repo/Dockerfile
   CONTEXT: .
 
 run:

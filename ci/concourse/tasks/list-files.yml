@@ -6,7 +6,7 @@ image_resource:
   source:
     repository: busybox
 inputs:
-  - name: pks-demo-git-repo
+  - name: articulate
     path: code
 run:        
   path: ./code/ci/concourse/config/list-files.sh

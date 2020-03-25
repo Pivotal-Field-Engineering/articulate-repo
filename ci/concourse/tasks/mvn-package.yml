@@ -6,7 +6,7 @@ image_resource:
         repository: maven
         tag: 3.6.3-jdk-11-slim 
 inputs:
-    - name: pks-demo-git-repo
+    - name: articulate
       path: code
 run:
     dir: code
