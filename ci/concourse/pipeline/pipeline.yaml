@@ -50,11 +50,11 @@ jobs:
       passed: [unit-test]
       trigger: true
     - get: version
-    - put: version
-      params: {bump: patch}
     - put: pks-demo-image
       params: { build: pks-demo-git-repo, tag_file: version/version }
-  
+      - put: version
+      params: {bump: patch}
+
   - name: deploy-pks
     public: true
     plan:
