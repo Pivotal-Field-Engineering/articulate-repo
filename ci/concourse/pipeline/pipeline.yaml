@@ -23,7 +23,7 @@ resources:
       username: ((harbor-username))
       password: ((harbor-password))
   
-  - name: version
+  - name: helmchart-semver
     type: semver
     source:
       driver: git
@@ -49,10 +49,10 @@ jobs:
     - get: articulate-repo
       passed: [unit-test]
       trigger: true
-    - get: version
+    - get: helmchart-semver
     - put: articulate-image
-      params: { build: articulate-repo, tag_file: version/version }
-    - put: version
+      params: { build: articulate-repo, tag_file: helmchart-semver/version }
+    - put: helmchart-semver
       params: {bump: patch}
 
   - name: deploy-articulate
