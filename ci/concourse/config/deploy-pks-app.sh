@@ -20,4 +20,7 @@ echo "Inspect ingress services and pods..."
 kubectl get services --all-namespaces
 kubectl get pods --all-namespaces
 
+
+uname -a 
+
 helm list
