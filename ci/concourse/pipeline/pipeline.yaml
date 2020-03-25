@@ -55,13 +55,13 @@ jobs:
     - put: version
       params: {bump: patch}
 
-  - name: deploy-pks
+  - name: deploy-articulate
     public: true
     plan:
       - get: articulate-repo
       - get: pks-demo-helm-git-repo
         trigger: true
-      - task: deploy-pks-app
+      - task: deploy-articulate-app
         file: articulate-repo/ci/concourse/tasks/deploy-demo-app.yml
         params:
           PKS_API: ((PKS_API))

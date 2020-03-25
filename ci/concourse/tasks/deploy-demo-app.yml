@@ -8,7 +8,7 @@ image_resource:
 inputs:
 - name: pks-demo-helm-git-repo
   path: code
-- name: articulate
+- name: articulate-demo
   path: ci
 
 
