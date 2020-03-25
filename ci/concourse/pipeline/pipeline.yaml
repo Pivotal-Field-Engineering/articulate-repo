@@ -12,6 +12,10 @@ resources:
       insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
       username: ((harbor-username))
       password: ((harbor-password))
+  - name: pcf-pipelines-utils
+    type: git
+    source:
+      uri: https://github.com/pivotalservices/concourse-pipeline-samples.git
 
 jobs:
   - name: unit-tests
@@ -25,7 +29,6 @@ jobs:
         file: pks-demo-git-repo/ci/concourse/tasks/mvn-test.yml
       - task: package
         file: pks-demo-git-repo/ci/concourse/tasks/mvn-package.yml
-
   - name: build-artifact
     public: true
     serial: true
@@ -35,3 +38,16 @@ jobs:
       trigger: true
     - put: pks-demo-image
       params: { build: pks-demo-git-repo, tag_as_latest: true }
+
+
+jobs:
+  - name: deploy-pks
+    public: true
+    plan:
+      - get: pcf-pipelines-utils
+      - get: pks-demo-image
+        trigger: true
+      - task: deploy-pks-app
+        file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
+      - task: package
+        file: pks-demo-git-repo/ci/concourse/tasks/mvn-package.yml
