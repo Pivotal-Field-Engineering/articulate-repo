@@ -6,9 +6,9 @@ image_resource:
         repository: pivotalservices/pks-kubectl
 
 inputs:
-- name: pks-demo-helm-git-repo
+- name: articulate-helmchart
   path: code
-- name: articulate-demo
+- name: articulate-repo
   path: ci
 
 

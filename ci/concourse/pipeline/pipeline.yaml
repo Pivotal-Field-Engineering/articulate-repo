@@ -8,7 +8,7 @@ resources:
       branch: master
       disable_ci_skip: false
   
-  - name: pks-demo-helm-git-repo
+  - name: articulate-helmchart
     type: git
     source:
       uri: https://github.com/Pivotal-Field-Engineering/articulate-helmchart.git
@@ -59,7 +59,7 @@ jobs:
     public: true
     plan:
       - get: articulate-repo
-      - get: pks-demo-helm-git-repo
+      - get: articulate-helmchart
         trigger: true
       - task: deploy-articulate-app
         file: articulate-repo/ci/concourse/tasks/deploy-demo-app.yml
