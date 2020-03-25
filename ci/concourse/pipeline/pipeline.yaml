@@ -12,7 +12,17 @@ resources:
       insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
       username: ((harbor-username))
       password: ((harbor-password))
-
+  - name: version
+    type: semver
+    source:
+      driver: git
+      uri: git@github.com:hemanth-avs/pks-demo.git
+      branch: master
+      file: version
+      #username: ((git.username))
+      #password: ((git.password))
+      commit_message: "Updates version"
+      private_key: ((GIT_PRIVATE_KEY))
 jobs:
   - name: unit-tests
     public: true
@@ -29,11 +39,14 @@ jobs:
     public: true
     serial: true
     plan:
+    - get: version
+    - put: version
+      params: {bump: patch}
     - get: pks-demo-git-repo
       passed: [unit-tests]
       trigger: true
     - put: pks-demo-image
-      params: { build: pks-demo-git-repo, tag_as_latest: true }
+      params: { build: pks-demo-git-repo, tag_as_latest: version/version }
   - name: deploy-pks
     public: true
     plan:
