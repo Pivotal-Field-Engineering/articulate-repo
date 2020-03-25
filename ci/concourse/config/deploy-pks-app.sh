@@ -28,4 +28,5 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 
 cd ./code/helm-chart
-helm upgrade ins1 pks-demo
+version=`cat ./code/version`
+helm upgrade ins1 pks-demo --set appVersion=$version
