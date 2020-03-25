@@ -62,7 +62,7 @@ jobs:
       - get: pks-demo-helm-git-repo
         trigger: true
       - task: deploy-pks-app
-        file: pks-demo-helm-git-repo/ci/concourse/tasks/deploy-demo-app.yml
+        file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
         params:
           PKS_API: ((PKS_API))
           PKS_CLI_USERNAME: ((PKS_CLI_USERNAME))
