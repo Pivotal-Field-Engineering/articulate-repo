@@ -58,6 +58,7 @@ jobs:
   - name: deploy-pks
     public: true
     plan:
+      - get: pks-demo-git-repo
       - get: pks-demo-helm-git-repo
         trigger: true
       - task: deploy-pks-app

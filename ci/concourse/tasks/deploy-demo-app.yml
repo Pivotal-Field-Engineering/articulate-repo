@@ -8,9 +8,12 @@ image_resource:
 inputs:
 - name: pks-demo-helm-git-repo
   path: code
+- name: pks-demo-git-repo
+  path: ci
+
 
 run:
-  path: ./code/ci/concourse/config/deploy-pks-app.sh
+  path: ./ci/ci/concourse/config/deploy-pks-app.sh
 
 params:
   PKS_API: ((PKS_API))
