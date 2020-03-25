@@ -46,7 +46,7 @@ jobs:
       passed: [unit-tests]
       trigger: true
     - put: pks-demo-image
-      params: { build: pks-demo-git-repo, tag_as_latest: version/version }
+      params: { build: pks-demo-git-repo, tag_file: version/version }
   - name: deploy-pks
     public: true
     plan:
