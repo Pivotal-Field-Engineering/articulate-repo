@@ -27,6 +27,6 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scr
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-version=`cat ./code/version`
-cd ./code/helm-chart
+version=`cat ./code/articulate/version`
+cd ./code/articulate
 helm upgrade ins1 pks-demo --set appVersion=$version
