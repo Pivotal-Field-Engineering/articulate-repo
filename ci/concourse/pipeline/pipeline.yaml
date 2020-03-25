@@ -16,7 +16,7 @@ resources:
     type: semver
     source:
       driver: git
-      uri: git@github.com:hemanth-avs/pks-demo.git
+      uri: git@github.com:hemanth-avs/semver.git
       branch: master
       file: version
       #username: ((git.username))
