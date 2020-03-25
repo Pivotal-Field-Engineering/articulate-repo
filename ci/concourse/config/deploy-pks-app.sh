@@ -23,4 +23,5 @@ kubectl get pods --all-namespaces
 
 uname -a 
 
+apt-get install helm
 helm list
