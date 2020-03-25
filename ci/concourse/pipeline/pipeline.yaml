@@ -52,7 +52,7 @@ jobs:
     - get: version
     - put: pks-demo-image
       params: { build: pks-demo-git-repo, tag_file: version/version }
-      - put: version
+    - put: version
       params: {bump: patch}
 
   - name: deploy-pks
