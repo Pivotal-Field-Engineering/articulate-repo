@@ -5,11 +5,13 @@ resources:
     source:
       uri: https://github.com/hemanth-avs/pks-demo.git
       branch: master
-#  - name: test-image
-#    type: registry-image
-#    source:
-#      repository: harbor.caas.pez.pivotal.io/hemanth
-#      tag: test
+  - name: pks-demo-image
+    type: docker-image
+    source:
+      repository: harbor.caas.pez.pivotal.io:443/hemanth/pks-demo
+      insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
+      username: ((harbor-username))
+      password: ((harbor-password))
 
 jobs:
   - name: unit-tests
@@ -31,6 +33,5 @@ jobs:
     - get: pks-demo-git-repo
       passed: [unit-tests]
       trigger: true
-    - task: build
-      privileged: true
-      file: pks-demo-git-repo/ci/concourse/tasks/build-image.yml
+    - put: pks-demo-image
+      params: { build: pks-demo-git-repo, tag_as_latest: true }
