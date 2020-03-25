@@ -38,9 +38,6 @@ jobs:
       trigger: true
     - put: pks-demo-image
       params: { build: pks-demo-git-repo, tag_as_latest: true }
-
-
-jobs:
   - name: deploy-pks
     public: true
     plan:
@@ -49,5 +46,3 @@ jobs:
         trigger: true
       - task: deploy-pks-app
         file: pks-demo-git-repo/ci/concourse/tasks/deploy-demo-app.yml
-      - task: package
-        file: pks-demo-git-repo/ci/concourse/tasks/mvn-package.yml
