@@ -19,3 +19,5 @@ echo "Deploying Application..."
 echo "Inspect ingress services and pods..."
 kubectl get services --all-namespaces
 kubectl get pods --all-namespaces
+
+helm list

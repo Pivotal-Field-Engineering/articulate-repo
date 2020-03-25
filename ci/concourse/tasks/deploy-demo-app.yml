@@ -6,7 +6,6 @@ image_resource:
         repository: pivotalservices/pks-kubectl
 
 inputs:
-- name: pcf-pipelines-utils
 - name: pks-demo-git-repo
   path: code
 

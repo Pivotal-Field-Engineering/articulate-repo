@@ -12,10 +12,6 @@ resources:
       insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
       username: ((harbor-username))
       password: ((harbor-password))
-  - name: pcf-pipelines-utils
-    type: git
-    source:
-      uri: https://github.com/pivotalservices/concourse-pipeline-samples.git
 
 jobs:
   - name: unit-tests
@@ -41,7 +37,6 @@ jobs:
   - name: deploy-pks
     public: true
     plan:
-      - get: pcf-pipelines-utils
       - get: pks-demo-git-repo
       - get: pks-demo-image
         trigger: true
