@@ -28,5 +28,5 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 
 version=`cat ./code/articulate/version`
-cd ./code/articulate
+cd ./code
 helm upgrade ins1 articulate --set appVersion=$version
