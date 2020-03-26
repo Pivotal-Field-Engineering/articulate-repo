@@ -2,7 +2,7 @@
 
 set -eu
 
-sleep 10
+sleep 60
 
 TAG_NAME=`cat helmchart-semver/version`
 
