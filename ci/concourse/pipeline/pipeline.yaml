@@ -93,6 +93,12 @@ jobs:
         HARBOR_HOST: ((harbor.host))
         HARBOR_USERNAME: ((harbor.username))
         HARBOR_PASSWORD: ((harbor.password))
+    on_failure:
+      put: notify-team
+      params:
+        text: >
+          :x: Container Images has vulnerability of severity of High or Critical.
+          Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
 
   - name: update-helm-chart
     public: true
