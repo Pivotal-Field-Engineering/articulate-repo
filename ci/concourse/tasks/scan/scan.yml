@@ -6,7 +6,7 @@
       source:
         repository: mikefarah/yq
     inputs:
-      - input: helmchart-semver
+      - name: helmchart-semver
       - name: articulate-repo
         path: code
     run:        
@@ -20,4 +20,4 @@
       HARBOR_HOST: ((harbor.host))
       HARBOR_USERNAME: ((harbor.username))
       HARBOR_PASSWORD: ((harbor.password))
-      TAG_NAME: helmchart-semver/versiob
+      TAG_NAME: helmchart-semver/version
