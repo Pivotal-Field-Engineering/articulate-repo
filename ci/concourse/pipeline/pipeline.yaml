@@ -1,5 +1,29 @@
 ---
-
+groups:
+  - name: Articulate pipeline
+    jobs:
+      - unit-test
+      - build-image
+      - scan-image
+      - update-helm-chart
+      - deploy-articulate-sit
+      - deploy-articulate-uat  
+  - name: Test
+    jobs:
+      - unit-test
+  - name: Build
+    jobs:
+      - build-image
+  - name: Scan
+    jobs:
+      - scan-image
+  - name: Publish
+    jobs:
+      - update-helm-chart
+  - name: Deploy
+    jobs:
+      - deploy-articulate-sit 
+      - deploy-articulate-uat 
 resource_types:  
   - name: slack-notification
     type: registry-image
@@ -118,7 +142,36 @@ jobs:
     - put: helmchart-semver
       params: {bump: patch}
 
-  - name: deploy-articulate
+  - name: deploy-articulate-sit
+    public: true
+    plan:
+      - get: articulate-repo
+      - get: articulate-helmchart
+        trigger: true
+      - task: deploy-articulate-app
+        file: articulate-repo/ci/concourse/tasks/deploy-demo-app.yml
+        params:
+          PKS_API: ((PKS_API))
+          PKS_CLI_USERNAME: ((PKS_CLI_USERNAME))
+          PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
+          PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
+          PKS_SKIP_TLS_VERIFY: true
+      - put: notify-team
+        params:
+          text: ""
+    on_success:
+      put: notify-team
+      params:
+        text: >
+          :rocket: Articulate deployed successfully!
+    on_failure:
+      put: notify-team
+      params:
+        text: >
+          Deploy Articulate Concourse Job Failured :x:
+          Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
+
+  - name: deploy-articulate-uat
     public: true
     plan:
       - get: articulate-repo
