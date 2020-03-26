@@ -9,7 +9,7 @@
       - name: articulate-repo
         path: code
     run:        
-      path: ./code/ci/concourse/tasks/test/test.sh
+      path: ./code/ci/concourse/tasks/scan/scan.sh
     #run:
     #  dir: code
     #  path: ls
@@ -19,3 +19,4 @@
       HARBOR_HOST: ((harbor.host))
       HARBOR_USERNAME: ((harbor.username))
       HARBOR_PASSWORD: ((harbor.password))
+      TAG_NAME: TAG_NAME
