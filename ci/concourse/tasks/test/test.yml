@@ -16,6 +16,6 @@
     #  args: ["-lRta"]
 
     params:
-        harbor.host: ((harbor.host))
-        harbor.username: ((harbor.username))
-        harbor.password: ((harbor.password))
+        HARBOR_HOST: ((harbor.host))
+        HARBOR_USERNAME: ((harbor.username))
+        HARBOR_PASSWORD: ((harbor.password))
