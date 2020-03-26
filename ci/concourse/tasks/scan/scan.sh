@@ -4,7 +4,7 @@ set -eu
 
 sleep 10
 
-TAG_NAME=`cat helmchartsemver/version`
+TAG_NAME=`cat helmchart-semver/version`
 
 wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic ${HARBOR_PASSWORD}" --header "Content-Type: application/json" https://${HARBOR_HOST}/api/repositories/hemanth/pks-demo/tags/${TAG_NAME}
 
