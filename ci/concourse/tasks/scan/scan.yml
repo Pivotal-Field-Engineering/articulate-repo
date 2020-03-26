@@ -6,7 +6,7 @@
       source:
         repository: mikefarah/yq
     inputs:
-      - name: helmchart-semver
+      - name: helmchartsemver
       - name: articulate-repo
         path: code
     run:        
