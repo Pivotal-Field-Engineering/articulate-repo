@@ -7,7 +7,7 @@ echo "Hemanth"
 ls -lrta helmchartsemver
 ls -lrta ./helmchartsemver
 cat helmchartsemver/version
-cat ./helmchartsemver/version
+cat ./helmchartsemver/*
 
 echo https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/$1
 
