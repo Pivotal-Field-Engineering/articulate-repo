@@ -3,6 +3,7 @@
 set -eu
 uname -a
 
+echo "Hemanth"
 cat helmchartsemver/version
 
 echo https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/$1
