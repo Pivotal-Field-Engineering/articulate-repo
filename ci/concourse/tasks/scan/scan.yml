@@ -11,7 +11,7 @@
         path: code
     run:        
       path: ./code/ci/concourse/tasks/scan/scan.sh
-      args: ["helmchartsemver/version"]
+      args: [ helmchartsemver/version ]
     #run:
     #  dir: code
     #  path: ls
