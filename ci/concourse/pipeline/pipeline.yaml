@@ -59,6 +59,13 @@ jobs:
         trigger: true
       - task: unit-test
         file: articulate-repo/ci/concourse/tasks/mvn-test.yml
+    on_failure:
+      put: notify-team
+      params:
+        text: >
+          :x: Unit Test failing on the Articulate repo
+          Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
+
 
   - name: build-image
     public: true
