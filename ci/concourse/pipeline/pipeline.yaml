@@ -1,8 +1,17 @@
 ---
+
+resource_types:  
+  - name: slack-notification
+    type: registry-image
+    source:
+      repository: cfcommunity/slack-notification-resource
+
+
 resources:
 
   - name: articulate-repo
     type: git
+    icon: github-circle
     source:
       uri: https://github.com/hemanth-avs/pks-demo.git
       branch: master
@@ -10,6 +19,7 @@ resources:
   
   - name: articulate-helmchart
     type: git
+    icon: github-circle
     source:
       uri: https://github.com/Pivotal-Field-Engineering/articulate-helmchart.git
       branch: master
@@ -17,6 +27,7 @@ resources:
   
   - name: articulate-image
     type: docker-image
+    icon: docker
     source:
       repository: harbor.caas.pez.pivotal.io:443/hemanth/pks-demo
       insecure_registries: [ "harbor.caas.pez.pivotal.io:443" ]
@@ -25,6 +36,7 @@ resources:
   
   - name: helmchart-semver
     type: semver
+    icon: &release-icon package-variant-closed
     source:
       driver: git
       uri: git@github.com:Pivotal-Field-Engineering/articulate-helmchart.git
@@ -32,6 +44,12 @@ resources:
       file: articulate/version
       commit_message: "ci skip"
       private_key: ((GIT_PRIVATE_KEY))
+
+  - name: notify-team
+    type: slack-notification
+    icon: slack
+    source:
+      url: ((slack_webhook_url))
 
 jobs:
   - name: unit-test
@@ -41,8 +59,8 @@ jobs:
         trigger: true
       - task: unit-test
         file: articulate-repo/ci/concourse/tasks/mvn-test.yml
-  
-  - name: publish-image
+
+  - name: build-image
     public: true
     serial: true
     plan:
@@ -50,8 +68,40 @@ jobs:
       passed: [unit-test]
       trigger: true
     - get: helmchart-semver
+      params: {bump: patch}
     - put: articulate-image
       params: { build: articulate-repo, tag_file: helmchart-semver/version }
+    - task: scan-image
+      file: articulate-repo/ci/concourse/tasks/scan/scan.yml
+      params:
+        HARBOR_HOST: ((harbor.host))
+        HARBOR_USERNAME: ((harbor.username))
+        HARBOR_PASSWORD: ((harbor.password))
+
+  - name: scan-image
+    public: true
+    serial: true
+    plan:
+    - get: articulate-repo
+      passed: [build-image]
+      trigger: true
+    - get: helmchart-semver
+      params: {bump: patch}
+    - task: scan-image
+      file: articulate-repo/ci/concourse/tasks/scan/scan.yml
+      params:
+        HARBOR_HOST: ((harbor.host))
+        HARBOR_USERNAME: ((harbor.username))
+        HARBOR_PASSWORD: ((harbor.password))
+
+  - name: update-helm-chart
+    public: true
+    serial: true
+    plan:
+    - get: helmchart-semver
+      params: {bump: patch}
+      passed: [scan-image]
+      trigger: true
     - put: helmchart-semver
       params: {bump: patch}
 
@@ -69,3 +119,17 @@ jobs:
           PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
           PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
           PKS_SKIP_TLS_VERIFY: true
+      - put: notify-team
+        params:
+          text: ""
+    on_success:
+      put: notify-team
+      params:
+        text: >
+          :rocket: Articulate deployed successfully!
+    on_failure:
+      put: notify-team
+      params:
+        text: >
+          Deploy Articulate Concourse Job Failured :x:
+          Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
