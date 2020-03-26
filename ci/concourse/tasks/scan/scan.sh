@@ -3,6 +3,8 @@
 set -eu
 uname -a
 
+sleep 30
+
 echo "Hemanth"
 ls -lrta helmchartsemver
 ls -lrta ./helmchartsemver
