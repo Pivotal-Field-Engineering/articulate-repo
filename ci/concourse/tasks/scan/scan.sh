@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -eux
 uname -a
 
 # sleep 30
@@ -11,8 +11,6 @@ echo https://${HARBOR_HOST}/api/repositories/hemanth/pks-demo/tags/${TAG_NAME}
 
 #wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic ${HARBOR_PASSWORD}" --header "Content-Type: application/json" https://${HARBOR_HOST}/api/repositories/hemanth/pks-demo/tags/1.16.289
 wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic ${HARBOR_PASSWORD}" --header "Content-Type: application/json" https://${HARBOR_HOST}/api/repositories/pks-demo/tags/${TAG_NAME}
-
-https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/${TAG_NAME}
 
 Result=`cat /tmp/scan.json | yq r - "scan_overview.*.severity"`
 
@@ -29,3 +27,6 @@ else
     echo "Container Images has vulnerability of severity of Critical and above. Failing the step"
     exit 1
 fi
+
+
+# wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic YXBwbGU6YmFsbAo=" --header "Content-Type: application/json" https://harbor.caas.pez.pivotal.io/api/repositories/hemanth/pks-demo/tags/1.16.325
