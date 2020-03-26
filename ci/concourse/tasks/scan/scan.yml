@@ -20,4 +20,4 @@
       HARBOR_HOST: ((harbor.host))
       HARBOR_USERNAME: ((harbor.username))
       HARBOR_PASSWORD: ((harbor.password))
-      TAG_NAME: helmchart-semver/version
+      TAG_NAME: ((helmchart-semver/version))
