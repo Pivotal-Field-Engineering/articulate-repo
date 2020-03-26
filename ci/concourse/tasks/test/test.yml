@@ -14,3 +14,8 @@
     #  dir: code
     #  path: ls
     #  args: ["-lRta"]
+
+    params:
+        harbor.host: ((harbor.host))
+        harbor.username: ((harbor.username))
+        harbor.password: ((harbor.password))
