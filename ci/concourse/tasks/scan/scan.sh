@@ -7,7 +7,7 @@ uname -a
 
 TAG_NAME=`cat helmchartsemver/version`
 
-echo https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/$1
+echo https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/${TAG_NAME}
 
 #wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic ${HARBOR_PASSWORD}" --header "Content-Type: application/json" https://${HARBOR_HOST}/api/repositories/hemanth/pks-demo/tags/1.16.289
 wget -O /tmp/scan.json --no-check-certificate  --header "Authorization: Basic ${HARBOR_PASSWORD}" --header "Content-Type: application/json" https://${HARBOR_HOST}/api/repositories/caas-workshop/mysql/tags/${TAG_NAME}
