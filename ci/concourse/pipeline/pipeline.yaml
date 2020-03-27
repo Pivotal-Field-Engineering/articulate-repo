@@ -6,8 +6,9 @@ groups:
       - build-image
       - cve-scan-harbor-image
       - update-helm-chart
-      - deploy-articulate-dev
       - deploy-articulate-test
+      - promote-to-prod
+      - deploy-articulate-prod
   - name: Test
     jobs:
       - test
@@ -22,14 +23,15 @@ groups:
       - update-helm-chart
   - name: Deploy
     jobs:
-      - deploy-articulate-dev
       - deploy-articulate-test
+      - promote-to-prod
+      - deploy-articulate-prod
+
 resource_types:  
   - name: slack-notification
     type: registry-image
     source:
       repository: cfcommunity/slack-notification-resource
-
 
 resources:
 
@@ -68,6 +70,7 @@ resources:
       file: articulate/version
       commit_message: "ci skip"
       private_key: ((GIT_PRIVATE_KEY))
+      initial_version: 1.0.0
 
   - name: notify-team
     type: slack-notification
@@ -142,7 +145,7 @@ jobs:
     - put: helmchart-semver
       params: {bump: patch}
 
-  - name: deploy-articulate-dev
+  - name: deploy-articulate-test
     public: true
     plan:
       - get: articulate-repo
@@ -156,9 +159,6 @@ jobs:
           PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
           PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
           PKS_SKIP_TLS_VERIFY: true
-      - put: notify-team
-        params:
-          text: ""
     on_success:
       put: notify-team
       params:
@@ -170,13 +170,41 @@ jobs:
         text: >
           Deploy Articulate Concourse Job Failured :x:
           Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
+  
+  - name: promote-to-prod
+    public: true
+    plan:
+      - get: articulate-helmchart
+        passed: [deploy-articulate-test]
+      - get: helmchart-semver
+      - get: helmchart-semver-prod
+        resource: helmchart-semver
+        params:
+          bump: minor
+      - put: articulate-image
+        params:
+          pull_repository: harbor.caas.pez.pivotal.io:443/hemanth/pks-demo
+          tag_file: helmchart-semver-prod/version
+          pull_tag: helmchart-semver/version
+          username: ((harbor-username))
+          password: ((harbor-password))
+      - put: helmchart-semver
+        params: {bump: minor}
+        #params:
+        #  tag: 1.16.395
+        #get_params:
+        #  skip_download: true
+        #  tag: 1.16.395
+      #- put: helmchart-semver
+      #  params: {bump: minor}
 
-  - name: deploy-articulate-test
+  - name: deploy-articulate-prod
     public: true
     plan:
       - get: articulate-repo
       - get: articulate-helmchart
         trigger: true
+        passed: [promote-to-prod]
       - task: deploy-articulate-app
         file: articulate-repo/ci/concourse/tasks/deploy-demo-app.yml
         params:
