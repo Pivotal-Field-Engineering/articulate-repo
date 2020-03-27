@@ -2,28 +2,28 @@
 groups:
   - name: Articulate pipeline
     jobs:
-      - unit-test
+      - test
       - build-image
-      - scan-image
+      - cve-scan-harbor-image
       - update-helm-chart
-      - deploy-articulate-sit
-      - deploy-articulate-uat  
+      - deploy-articulate-dev
+      - deploy-articulate-test
   - name: Test
     jobs:
-      - unit-test
+      - test
   - name: Build
     jobs:
       - build-image
   - name: Scan
     jobs:
-      - scan-image
+      - cve-scan-harbor-image
   - name: Publish
     jobs:
       - update-helm-chart
   - name: Deploy
     jobs:
-      - deploy-articulate-sit 
-      - deploy-articulate-uat 
+      - deploy-articulate-dev
+      - deploy-articulate-test
 resource_types:  
   - name: slack-notification
     type: registry-image
@@ -76,7 +76,7 @@ resources:
       url: ((slack_webhook_url))
 
 jobs:
-  - name: unit-test
+  - name: test
     public: true
     plan:
       - get: articulate-repo
@@ -96,20 +96,20 @@ jobs:
     serial: true
     plan:
     - get: articulate-repo
-      passed: [unit-test]
+      passed: [test]
       trigger: true
     - get: helmchart-semver
       params: {bump: patch}
     - put: articulate-image
       params: { build: articulate-repo, tag_file: helmchart-semver/version }
-    - task: scan-image
+    - task: cve-scan-harbor-image
       file: articulate-repo/ci/concourse/tasks/scan/scan.yml
       params:
-        HARBOR_HOST: ((harbor.host))
+        HARBOR_HOST: ((harbor.host))               
         HARBOR_USERNAME: ((harbor.username))
         HARBOR_PASSWORD: ((harbor.password))
 
-  - name: scan-image
+  - name: cve-scan-harbor-image
     public: true
     serial: true
     plan:
@@ -118,7 +118,7 @@ jobs:
       trigger: true
     - get: helmchart-semver
       params: {bump: patch}
-    - task: scan-image
+    - task: cve-scan-harbor-image
       file: articulate-repo/ci/concourse/tasks/scan/scan.yml
       params:
         HARBOR_HOST: ((harbor.host))
@@ -137,12 +137,12 @@ jobs:
     plan:
     - get: helmchart-semver
       params: {bump: patch}
-      passed: [scan-image]
+      passed: [cve-scan-harbor-image]
       trigger: true
     - put: helmchart-semver
       params: {bump: patch}
 
-  - name: deploy-articulate-sit
+  - name: deploy-articulate-dev
     public: true
     plan:
       - get: articulate-repo
@@ -171,7 +171,7 @@ jobs:
           Deploy Articulate Concourse Job Failured :x:
           Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
 
-  - name: deploy-articulate-uat
+  - name: deploy-articulate-test
     public: true
     plan:
       - get: articulate-repo
