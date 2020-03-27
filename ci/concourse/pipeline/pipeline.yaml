@@ -104,13 +104,11 @@ jobs:
     - get: helmchart-semver
       params: {bump: patch}
     - put: articulate-image
-      params: { build: articulate-repo, tag_file: helmchart-semver/version }
-    - task: cve-scan-harbor-image
-      file: articulate-repo/ci/concourse/tasks/scan/scan.yml
       params:
-        HARBOR_HOST: ((harbor.host))               
-        HARBOR_USERNAME: ((harbor.username))
-        HARBOR_PASSWORD: ((harbor.password))
+        build: articulate-repo
+        tag_file: helmchart-semver/version
+        tag_as_latest: true
+      get_params: {skip_download: true}
 
   - name: cve-scan-harbor-image
     public: true
@@ -185,9 +183,13 @@ jobs:
         params:
           pull_repository: harbor.caas.pez.pivotal.io:443/hemanth/pks-demo
           tag_file: helmchart-semver-prod/version
-          pull_tag: helmchart-semver/version
+          pull_tag: latest
+          #pull_tag: helmchart-semver/version
           username: ((harbor-username))
           password: ((harbor-password))
+          tag_as_latest: true
+        get_params: {skip_download: true}
+
       - put: helmchart-semver
         params: {bump: minor}
         #params:
