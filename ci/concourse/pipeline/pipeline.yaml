@@ -215,9 +215,6 @@ jobs:
           PKS_CLI_PASSWORD: ((PKS_CLI_PASSWORD))
           PKS_CLUSTER_NAME: ((PKS_CLUSTER_NAME))
           PKS_SKIP_TLS_VERIFY: true
-      - put: notify-team
-        params:
-          text: ""
     on_success:
       put: notify-team
       params:
