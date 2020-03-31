@@ -43,7 +43,7 @@
       type: git
       icon: github-circle
       source:
-        uri: https://github.com/hemanth-avs/pks-demo.git
+        uri: ((articulate-repo))
         branch: master
         disable_ci_skip: false
     
@@ -51,7 +51,7 @@
       type: git
       icon: github-circle
       source:
-        uri: https://github.com/Pivotal-Field-Engineering/articulate-helmchart.git
+        uri: ((articulate-helmchart))
         branch: master
         disable_ci_skip: true
     
@@ -69,7 +69,7 @@
       icon: &release-icon package-variant-closed
       source:
         driver: git
-        uri: git@github.com:Pivotal-Field-Engineering/articulate-helmchart.git
+        uri: ((articulate-helmchart))
         branch: master
         file: articulate/version
         commit_message: "ci skip"
