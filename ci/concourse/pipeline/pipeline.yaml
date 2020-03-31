@@ -46,6 +46,7 @@
         uri: ((articulate-repo))
         branch: master
         disable_ci_skip: false
+        private_key: ((GIT_PRIVATE_KEY))
     
     - name: articulate-helmchart
       type: git
@@ -54,6 +55,7 @@
         uri: ((articulate-helmchart))
         branch: master
         disable_ci_skip: true
+        private_key: ((GIT_PRIVATE_KEY))
     
     - name: articulate-image
       type: docker-image
@@ -211,7 +213,6 @@
             pull_repository: harbor.caas.pez.pivotal.io:443/hemanth/pks-demo
             tag_file: helmchart-semver-prod/version
             pull_tag: latest
-            #pull_tag: helmchart-semver/version
             username: ((harbor-username))
             password: ((harbor-password))
             tag_as_latest: true
@@ -219,13 +220,6 @@
   
         - put: helmchart-semver
           params: {bump: minor}
-          #params:
-          #  tag: 1.16.395
-          #get_params:
-          #  skip_download: true
-          #  tag: 1.16.395
-        #- put: helmchart-semver
-        #  params: {bump: minor}
   
     - name: deploy-articulate-prod
       public: true
@@ -275,4 +269,3 @@
           text: >
             Test Articulate Prod Failured :x:
             Job: <http://((concourse_host))/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|ID>
-  
