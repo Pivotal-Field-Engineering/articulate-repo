@@ -10,3 +10,4 @@ build/
 /.idea/
 ci/variables.yml
 ci/concourse/pipeline/values.yml
+ci/concourse/pipeline/pipeline-test.yml
