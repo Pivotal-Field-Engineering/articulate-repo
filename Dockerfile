@@ -2,7 +2,7 @@ FROM maven:3.6.3-jdk-11-slim AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
 
-RUN cd /home/app && mvn clean package
+RUN cd /home/app && mvn package -DskipTests
 
 
 FROM openjdk:8-jre-slim
