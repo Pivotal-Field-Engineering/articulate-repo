@@ -35,11 +35,14 @@ public class EnvironmentHelper {
       modelMap.put("containerAddr", request.getLocalAddr() + ":" + request.getLocalPort());
     }
 
-    if (System.getenv("HOSTNAME") == null) {
+    if (System.getenv("HOSTNAME") != null) {
       modelMap.put("instanceName", System.getenv("HOSTNAME"));
     } else {
-      modelMap.put("instanceName", System.getenv("-"));
+      modelMap.put("instanceName", "-");
     }
+
+    Map<String, String> env = System.getenv();
+    env.forEach((k, v) -> System.out.println(k + ":" + v));
 
     String instanceIndex = getVcapApplicationMap().getOrDefault(
         "instance_index", "no index environment variable").toString();
