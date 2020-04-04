@@ -6,8 +6,5 @@
 build/
 .project
 .springBeans
-/pcf-ers-demo1.iml
-/.idea/
-ci/variables.yml
-ci/concourse/pipeline/values.yml
-ci/concourse/pipeline/pipeline-test.yml
+/.apt_generated/
+.mvn/
