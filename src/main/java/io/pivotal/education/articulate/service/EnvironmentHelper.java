@@ -37,6 +37,8 @@ public class EnvironmentHelper {
 
     if (System.getenv("HOSTNAME") == null) {
       modelMap.put("instanceName", System.getenv("HOSTNAME"));
+    } else {
+      modelMap.put("instanceName", System.getenv("-"));
     }
 
     String instanceIndex = getVcapApplicationMap().getOrDefault(
