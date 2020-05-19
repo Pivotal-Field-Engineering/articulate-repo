@@ -22,4 +22,14 @@ public class ArticulateRestController {
 		return (String) environmentHelper.getVcapApplicationMap().
 				getOrDefault("application_name", "no name environment variable");
 	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/bluegreen-checkv1")
+	public String bluegreenRequestv1() throws Exception {
+		
+		if (System.getenv("APP_VERSION") == null) {
+			return "apple";
+		}
+		return System.getenv("APP_VERSION");
+	}
 }

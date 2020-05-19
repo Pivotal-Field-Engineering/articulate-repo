@@ -95,7 +95,7 @@
 		
 		function startLoad() {
 
-			$.get("/bluegreen-check", function(appName) {
+			$.get("/bluegreen-checkv1", function(appName) {
 
 				if (appName in versions) {
 					versions[appName] = 1 + versions[appName];
