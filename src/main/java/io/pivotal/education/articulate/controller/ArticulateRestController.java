@@ -24,12 +24,22 @@ public class ArticulateRestController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping("/bluegreen-checkv1")
-	public String bluegreenRequestv1() throws Exception {
+	@RequestMapping("/bluegreen-check-appversion")
+	public String bluegreenRequestAppversion() throws Exception {
 		
 		if (System.getenv("APP_VERSION") == null) {
-			return "apple";
+			return "Version Not Available";
 		}
 		return System.getenv("APP_VERSION");
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/bluegreen-check-hostname")
+	public String bluegreenRequestHostname() throws Exception {
+		
+		if (System.getenv("HOSTNAME") == null) {
+			return "Version Not Available";
+		}
+		return System.getenv("HOSTNAME");
 	}
 }
