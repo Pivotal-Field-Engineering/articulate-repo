@@ -20,10 +20,10 @@ public class ArticulateRestController {
 	@RequestMapping("/bluegreen-check")
 	public String bluegreenRequest() throws Exception {
 	
-		if (System.getenv("HOSTNAME") == null) {
+		if (System.getenv("APP_VERSION") == null) {
 			return "Version Not Available";
 		}
-		return System.getenv("HOSTNAME");
+		return System.getenv("APP_VERSION");
 	}
 
 	@SuppressWarnings("unchecked")
