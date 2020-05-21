@@ -19,8 +19,11 @@ public class ArticulateRestController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/bluegreen-check")
 	public String bluegreenRequest() throws Exception {
-		return (String) environmentHelper.getVcapApplicationMap().
-				getOrDefault("application_name", "no name environment variable");
+	
+		if (System.getenv("HOSTNAME") == null) {
+			return "Version Not Available";
+		}
+		return System.getenv("HOSTNAME");
 	}
 
 	@SuppressWarnings("unchecked")

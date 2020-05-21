@@ -95,7 +95,7 @@
 		
 		function startLoad() {
 
-			$.get("/bluegreen-check-hostname", function(appName) {
+			$.get("/bluegreen-check", function(appName) {
 
 				if (appName in versions) {
 					versions[appName] = 1 + versions[appName];
